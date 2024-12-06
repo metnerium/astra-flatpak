@@ -1,0 +1,50 @@
+{
+    "id": "org.astra.Gtk",
+    "branch": "1.8",
+    "runtime": "org.astra.mainPlatform",
+    "runtime-version": "1.8",
+    "sdk": "org.astra.mainSdk",
+    "separate-locales": true,
+    "build-runtime": true,
+    "cleanup": [
+        "/tmp/*",
+        "/var/cache",
+        "/var/lib/apt",
+        "/var/log",
+        "/usr/share/doc",
+        "/usr/share/man",
+        "/usr/share/info",
+        "/usr/share/lintian",
+        "/usr/share/linda",
+        "/var/lib/dpkg/*-old",
+        "/var/lib/dbus/machine-id",
+        "/usr/share/applications"
+    ],
+    "modules": [
+        {
+            "name": "astra-gtk",
+            "buildsystem": "simple",
+            "sources": [
+                {
+                    "type": "archive",
+                    "path": "../build_dir/astra-gtk.tar.gz",
+                    "strip-components": 0,
+                    "only-arches": ["x86_64"]
+                }
+            ],
+            "build-commands": [
+                "ls -la",
+                "/bin/bash -c 'mkdir -p ${FLATPAK_DEST}/usr/{lib,share,lib64}'",
+                "/bin/bash -c 'for f in astra-gtk/usr/lib/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib/; fi; done'",
+                "/bin/bash -c 'for f in astra-gtk/usr/share/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/share/; fi; done'",
+                "/bin/bash -c 'if [ -d astra-gtk/lib ]; then for f in astra-gtk/lib/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib/; fi; done; fi'",
+                "/bin/bash -c 'if [ -d astra-gtk/lib64 ]; then for f in astra-gtk/lib64/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib64/; fi; done; fi'",
+                "/bin/bash -c 'mkdir -p ${FLATPAK_DEST}/usr/share/glib-2.0/schemas'",
+                "/bin/bash -c 'if [ -d astra-gtk/usr/share/glib-2.0/schemas ]; then cp -a astra-gtk/usr/share/glib-2.0/schemas/* ${FLATPAK_DEST}/usr/share/glib-2.0/schemas/; fi'",
+                "/bin/bash -c 'if [ -d ${FLATPAK_DEST}/usr/share/glib-2.0/schemas ]; then glib-compile-schemas ${FLATPAK_DEST}/usr/share/glib-2.0/schemas; fi'"
+            ]
+        }
+    ],
+    "add-extensions": {
+    }
+}

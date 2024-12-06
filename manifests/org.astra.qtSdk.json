@@ -1,0 +1,48 @@
+{
+    "id": "org.astra.qtSdk",
+    "branch": "1.8",
+    "runtime": "org.astra.mainPlatform",
+    "runtime-version": "1.8",
+    "sdk": "org.astra.mainSdk",
+    "cleanup": [
+        "/tmp/*",
+        "/var/cache",
+        "/var/lib/apt",
+        "/var/log",
+        "/usr/share/doc",
+        "/usr/share/man",
+        "/usr/share/info",
+        "/usr/share/lintian",
+        "/usr/share/linda",
+        "/var/lib/dpkg/*-old",
+        "/var/lib/dbus/machine-id",
+        "/usr/share/applications"
+    ],
+    "build-runtime": true,
+    "modules": [
+        {
+            "name": "astra-qtSdk",
+            "buildsystem": "simple",
+            "sources": [
+                {
+                    "type": "archive",
+                    "path": "../build_dir/astra-qtsdk.tar.gz",
+                    "strip-components": 0,
+                    "only-arches": ["x86_64"]
+                }
+            ],
+            "build-commands": [
+                "ls -la",
+                "/bin/bash -c 'mkdir -p ${FLATPAK_DEST}/usr/{bin,lib,include,share,lib64}'",
+                "/bin/bash -c 'for f in astra-qtsdk/usr/bin/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/bin/; fi; done'",
+                "/bin/bash -c 'for f in astra-qtsdk/usr/lib/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib/; fi; done'",
+                "/bin/bash -c 'for f in astra-qtsdk/usr/include/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/include/; fi; done'",
+                "/bin/bash -c 'for f in astra-qtsdk/usr/share/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/share/; fi; done'",
+                "/bin/bash -c 'if [ -d astra-qtsdk/lib ]; then for f in astra-qtsdk/lib/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib/; fi; done; fi'",
+                "/bin/bash -c 'if [ -d astra-qtsdk/lib64 ]; then for f in astra-qtsdk/lib64/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib64/; fi; done; fi'"
+            ]
+        }
+    ],
+    "add-extensions": {
+    }
+}

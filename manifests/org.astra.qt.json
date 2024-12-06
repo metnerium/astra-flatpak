@@ -1,0 +1,51 @@
+{
+    "id": "org.astra.Qt",
+    "branch": "1.8",
+    "runtime": "org.astra.mainPlatform",
+    "runtime-version": "1.8",
+    "sdk": "org.astra.mainSdk",
+    "separate-locales": true,
+    "build-runtime": true,
+    "cleanup": [
+        "/tmp/*",
+        "/var/cache",
+        "/var/lib/apt",
+        "/var/log",
+        "/usr/share/doc",
+        "/usr/share/man",
+        "/usr/share/info",
+        "/usr/share/lintian",
+        "/usr/share/linda",
+        "/var/lib/dpkg/*-old",
+        "/var/lib/dbus/machine-id",
+        "/usr/share/applications"
+    ],
+    "modules": [
+        {
+            "name": "astra-qt",
+            "buildsystem": "simple",
+            "sources": [
+                {
+                    "type": "archive",
+                    "path": "../build_dir/astra-qt.tar.gz",
+                    "strip-components": 0,
+                    "only-arches": ["x86_64"]
+                }
+            ],
+            "build-commands": [
+                "ls -la",
+                "/bin/bash -c 'mkdir -p ${FLATPAK_DEST}/usr/{lib,share,lib64}'",
+                "/bin/bash -c 'for f in astra-qt/usr/lib/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib/; fi; done'",
+                "/bin/bash -c 'for f in astra-qt/usr/share/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/share/; fi; done'",
+                "/bin/bash -c 'if [ -d astra-qt/lib ]; then for f in astra-qt/lib/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib/; fi; done; fi'",
+                "/bin/bash -c 'if [ -d astra-qt/lib64 ]; then for f in astra-qt/lib64/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib64/; fi; done; fi'",
+                "/bin/bash -c 'mkdir -p ${FLATPAK_DEST}/usr/lib/qt5/plugins'",
+                "/bin/bash -c 'if [ -d astra-qt/usr/lib/x86_64-linux-gnu/qt5/plugins ]; then cp -a astra-qt/usr/lib/x86_64-c-gnu/qt5/plugins/* ${FLATPAK_DEST}/usr/lib/qt5/plugins/; fi'",
+                "mkdir -p ${FLATPAK_DEST}/etc/profile.d",
+                "echo 'export QT_PLUGIN_PATH=/usr/lib/qt5/plugins' > ${FLATPAK_DEST}/etc/profile.d/qt.sh",
+                "echo 'export QT_QPA_PLATFORMTHEME=gtk2' >> ${FLATPAK_DEST}/etc/profile.d/qt.sh"
+            ]
+        }
+    ],
+    "add-extensions": {}
+}
