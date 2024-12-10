@@ -48,7 +48,6 @@ apt-get install -y \
     fly-all-main \
     alsa-utils \
     plymouth-x11 \
-    breeze-gtk-theme \
     python3-reportlab \
     fontconfig-config \
     printer-driver-postscript-hp \
@@ -62,18 +61,14 @@ apt-get install -y \
     hplip-gui \
     acpi-support \
     fly-astra-update \
-    network-manager-gnome \
-    synaptic \
     fly-all-optional \
     fly-admin-int-check \
     menu \
     xorg-all-main \
     eject \
     anacron \
-    qtvirtualkeyboard-plugin \
     cups \
     system-config-audit \
-    phonon4qt5-backend-gstreamer \
     libmtp-runtime \
     cups-client \
     network-manager-openvpn-gnome \
@@ -87,7 +82,67 @@ apt-get install -y \
     hplip \
     pulseaudio \
     qt5-style-plugins \
-    qt5-gtk-platformtheme
+    qt5-gtk-platformtheme \
+    libqt5core5a \
+    libqt5gui5 \
+    libqt5widgets5 \
+    libqt5network5 \
+    libqt5dbus5 \
+    libqt5xml5 \
+    libqt5sql5 \
+    libqt5printsupport5 \
+    libqt5multimedia5 \
+    libqt5multimedia5-plugins \
+    libqt5multimediawidgets5 \
+    libqt5positioning5 \
+    libqt5qml5 \
+    libqt5quick5 \
+    libqt5webchannel5 \
+    libqt5webkit5 \
+    libqt5x11extras5 \
+    libkf5coreaddons5 \
+    libkf5windowsystem5 \
+    libkf5service5 \
+    libkf5notifications5 \
+    libkf5iconthemes5 \
+    libkf5completion5 \
+    libxcb-icccm4 \
+    libxcb-image0 \
+    libxcb-keysyms1 \
+    libxcb-render-util0 \
+    libxcb-xinerama0 \
+    libxcb-xkb1
+apt-get install -y \
+    libqt5core5a \
+    libqt5gui5 \
+    libqt5widgets5 \
+    libqt5network5 \
+    libqt5dbus5 \
+    libqt5xml5 \
+    libqt5sql5 \
+    libqt5printsupport5 \
+    libqt5multimedia5 \
+    libqt5multimedia5-plugins \
+    libqt5multimediawidgets5 \
+    libqt5positioning5 \
+    libqt5qml5 \
+    libqt5quick5 \
+    libqt5webchannel5 \
+    libqt5webkit5 \
+    libqt5x11extras5 \
+    qt5-style-plugins \
+    qt5-gtk-platformtheme \
+    libxcb-icccm4 \
+    libxcb-image0 \
+    libxcb-keysyms1 \
+    libxcb-render-util0 \
+    libxcb-xinerama0 \
+    libxcb-xkb1 \
+    libxkbcommon-x11-0 \
+    libfontconfig1 \
+    libfreetype6 \
+    libgl1-mesa-dri \
+    libglib2.0-0
 apt-get clean
 
 EOF

@@ -10,7 +10,7 @@
 - [Архитектура](docs/architecture.md)
 - [Сборка Astra flatpak](docs/astra-local-build.md)
 - [Руководство разработчика](docs/developer-guide.md)
-- [Локальная сборка Freedesktop Kde Gnome](mainline/mainline.md)
+- [Локальная сборка Freedesktop Kde Gnome](mainline/README.md)
 
 ## Быстрый старт
 

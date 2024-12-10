@@ -61,7 +61,6 @@ apt-get install -y \
     libparsec-cap3 \
     apt \
     atftp \
-    dvd+rw-tools \
     vim \
     sosreport \
     anacron \
@@ -88,7 +87,6 @@ apt-get install -y \
     acpi \
     rsh-client \
     bsign \
-    sudo \
     parsec-cap \
     parsec-aud \
     expect \
@@ -102,17 +100,13 @@ apt-get install -y \
     pcmciautils \
     unzip \
     parsec-kiosk2 \
-    logcheck \
     bind9-host \
     ncurses-term \
-    aspell-ru \
-    wireless-tools \
     dosfstools \
     bash-completion \
     parsec-cups \
     fakeroot \
-    lsof \
-    linux-firmware
+    lsof
 
 apt-get clean
 

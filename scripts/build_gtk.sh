@@ -50,13 +50,64 @@ apt install -y \
     gsettings-desktop-schemas \
     adwaita-icon-theme \
     librsvg2-common \
-    gvfs-backends \
     xdg-desktop-portal-gtk \
     gstreamer1.0-plugins-base \
     gstreamer1.0-plugins-good \
     libsoup2.4-1 \
     libsecret-1-0 \
     libwebkit2gtk-4.0-37
+apt-get install -y \
+    bubblewrap \
+    desktop-file-utils \
+    gsettings-desktop-schemas \
+    gvfs \
+    hicolor-icon-theme \
+    shared-mime-info \
+    libgtk-3-0 \
+    libgtk-4-1 \
+    libgtk2.0-0 \
+    libglib2.0-0 \
+    libglib2.0-data \
+    glib-networking \
+    libcairo2 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libpangoft2-1.0-0 \
+    adwaita-icon-theme \
+    librsvg2-common \
+    libgdk-pixbuf-2.0-0 \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    libgstreamer1.0-0 \
+    libgstreamer-plugins-base1.0-0 \
+    libpng16-16 \
+    libjpeg62-turbo \
+    libtiff6 \
+    libwebp7 \
+    libwebpdemux2 \
+    libwebpmux3 \
+    xdg-desktop-portal-gtk \
+    libsoup2.4-1 \
+    libsecret-1-0 \
+    libwebkit2gtk-4.0-37 \
+    pkexec \
+    policykit-1 \
+    polkitd \
+    libnotify4 \
+    libxml2 \
+    libselinux1 \
+    libvte-2.91-0 \
+    libaa1 \
+    libbz2-1.0 \
+    libharfbuzz0b \
+    libfontconfig1 \
+    libfreetype6 \
+    libx11-6 \
+    libxcursor1 \
+    libxext6 \
+    libxfixes3 \
+    libxmu6 \
+    libxpm4
 apt-get clean
 
 EOF

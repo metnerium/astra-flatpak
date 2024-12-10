@@ -47,10 +47,64 @@ echo "deb https://download.astralinux.ru/astra/stable/1.8_x86-64/repository-exte
 deb https://download.astralinux.ru/astra/stable/1.8_x86-64/repository-main/ 1.8_x86-64 main contrib non-free non-free-firmware" | tee /etc/apt/sources.list
 apt update
 apt install -y libarchive13 libcurl4 libexpat1 libuv1 procps
-apt install -y cmake gcc g++
 apt-get install -y \
+    build-essential \
+    cmake \
+    gcc \
+    g++ \
+    git \
+    subversion \
+    ninja-build \
+    pkg-config \
+    make \
+    autoconf \
+    automake \
+    libtool \
     qtbase5-dev \
     qt5-qmake \
+    qt5-default \
+    qttools5-dev \
+    qttools5-dev-tools \
+    qtdeclarative5-dev \
+    qtmultimedia5-dev \
+    qtwebengine5-dev \
+    qtpositioning5-dev \
+    qtconnectivity5-dev \
+    qtlocation5-dev \
+    qtscript5-dev \
+    qt5-assistant \
+    extra-cmake-modules \
+    libkf5config-dev \
+    libkf5coreaddons-dev \
+    libkf5i18n-dev \
+    libkf5kio-dev \
+    libkf5service-dev \
+    libkf5windowsystem-dev \
+    libkf5auth-dev \
+    libkf5bookmarks-dev \
+    libkf5codecs-dev \
+    libkf5completion-dev \
+    libkf5configwidgets-dev \
+    libkf5crash-dev \
+    libkf5dbusaddons-dev \
+    libkf5declarative-dev \
+    libkf5doctools-dev \
+    libkf5emoticons-dev \
+    libkf5guiaddons-dev \
+    libkf5iconthemes-dev \
+    libkf5idletime-dev \
+    libkf5itemmodels-dev \
+    libkf5itemviews-dev \
+    libkf5jobwidgets-dev \
+    libkf5notifications-dev \
+    libkf5parts-dev \
+    libkf5plasma-dev \
+    libkf5runner-dev \
+    libkf5solid-dev \
+    libkf5sonnet-dev \
+    libkf5textwidgets-dev \
+    libkf5wallet-dev \
+    libkf5xmlgui-dev \
     libx11-dev \
     libxcb1-dev \
     libxkbcommon-dev \
@@ -69,13 +123,52 @@ apt-get install -y \
     libdbus-1-dev \
     libdbus-glib-1-dev \
     libsystemd-dev \
+    qttools5-dev \
+    qttools5-dev-tools \
+    libqt5waylandclient5-dev \
+    libqt5waylandcompositor5-dev \
     python3-dev \
     python3-all-dev \
+    qtcreator \
+    gdb \
+    valgrind \
+    heaptrack \
+    massif-visualizer \
+    libboost-all-dev \
+    libeigen3-dev \
+    libgsl-dev \
+    libssl-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libjson-glib-dev \
+    libarchive-dev \
+    libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
     libcups2-dev \
     libcupsimage2-dev \
     libnm-dev \
     libndp-dev \
     libnl-3-dev \
+    gettext
+apt-get install -y \
+    build-essential \
+    cmake \
+    ninja-build \
+    pkg-config \
+    git \
+    qtbase5-dev \
+    qt5-qmake \
+    qt5-default \
+    qttools5-dev \
+    qttools5-dev-tools \
+    qtdeclarative5-dev \
+    qtmultimedia5-dev \
+    qtpositioning5-dev \
+    qtconnectivity5-dev \
+    qtlocation5-dev \
+    qtscript5-dev \
+    qtwebengine5-dev \
+    qt5-assistant \
     extra-cmake-modules \
     libkf5config-dev \
     libkf5coreaddons-dev \
@@ -83,8 +176,30 @@ apt-get install -y \
     libkf5kio-dev \
     libkf5service-dev \
     libkf5windowsystem-dev \
-    qttools5-dev \
-    qttools5-dev-tools
+    libkf5auth-dev \
+    libkf5codecs-dev \
+    libkf5configwidgets-dev \
+    libkf5dbusaddons-dev \
+    libkf5iconthemes-dev \
+    libkf5notifications-dev \
+    libkf5parts-dev \
+    libx11-dev \
+    libxcb1-dev \
+    libxkbcommon-dev \
+    libxext-dev \
+    libxi-dev \
+    libxtst-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    mesa-common-dev \
+    libfontconfig1-dev \
+    libfreetype6-dev \
+    libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
+    qtcreator \
+    gdb \
+    valgrind \
+    gettext
 apt-get clean
 
 EOF

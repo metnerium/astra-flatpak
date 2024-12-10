@@ -32,18 +32,29 @@
                     "only-arches": ["x86_64"]
                 }
             ],
-            "build-commands": [
+             "build-commands": [
+                "set -ex",
                 "ls -la",
-                "/bin/bash -c 'mkdir -p ${FLATPAK_DEST}/usr/{lib,share,lib64}'",
-                "/bin/bash -c 'for f in astra-qt/usr/lib/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib/; fi; done'",
-                "/bin/bash -c 'for f in astra-qt/usr/share/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/share/; fi; done'",
-                "/bin/bash -c 'if [ -d astra-qt/lib ]; then for f in astra-qt/lib/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib/; fi; done; fi'",
-                "/bin/bash -c 'if [ -d astra-qt/lib64 ]; then for f in astra-qt/lib64/*; do if [ -e \"$f\" ]; then cp -a \"$f\" ${FLATPAK_DEST}/usr/lib64/; fi; done; fi'",
-                "/bin/bash -c 'mkdir -p ${FLATPAK_DEST}/usr/lib/qt5/plugins'",
-                "/bin/bash -c 'if [ -d astra-qt/usr/lib/x86_64-linux-gnu/qt5/plugins ]; then cp -a astra-qt/usr/lib/x86_64-c-gnu/qt5/plugins/* ${FLATPAK_DEST}/usr/lib/qt5/plugins/; fi'",
+                "mkdir -p ${FLATPAK_DEST}/usr/{lib,share,lib64,include}",
+                "mkdir -p ${FLATPAK_DEST}/usr/lib/x86_64-linux-gnu",
+                "mkdir -p ${FLATPAK_DEST}/usr/lib/qt5/{plugins,qml}",
+                "cp -arv usr/lib/x86_64-linux-gnu/libQt5*.so* ${FLATPAK_DEST}/usr/lib/ || true",
+                "cp -arv usr/lib/x86_64-linux-gnu/qt5 ${FLATPAK_DEST}/usr/lib/ || true",
+                "/bin/bash -c 'cp -ar usr/lib/x86_64-linux-gnu/qt5/plugins/* ${FLATPAK_DEST}/usr/lib/qt5/plugins/ 2>/dev/null || true'",
+                "cp -arv usr/lib/x86_64-linux-gnu/libxcb*.so* ${FLATPAK_DEST}/usr/lib/ || true",
+                "cp -arv usr/lib/x86_64-linux-gnu/libX11*.so* ${FLATPAK_DEST}/usr/lib/ || true",
+                "cp -arv usr/lib/x86_64-linux-gnu/libxkbcommon*.so* ${FLATPAK_DEST}/usr/lib/ || true",
+                "cp -arv usr/lib/x86_64-linux-gnu/libfontconfig*.so* ${FLATPAK_DEST}/usr/lib/ || true",
+                "cp -arv usr/lib/x86_64-linux-gnu/libfreetype*.so* ${FLATPAK_DEST}/usr/lib/ || true",
+                "cp -arv usr/lib/x86_64-linux-gnu/libglib-2.0*.so* ${FLATPAK_DEST}/usr/lib/ || true",
+                "/bin/bash -c 'cp -ar usr/share/qt5 ${FLATPAK_DEST}/usr/share/ 2>/dev/null || true'",
+                "/bin/bash -c 'mkdir -p ${FLATPAK_DEST}/usr/share/qt5/translations'",
+                "/bin/bash -c 'cp -ar usr/share/qt5/translations/* ${FLATPAK_DEST}/usr/share/qt5/translations/ 2>/dev/null || true'",
                 "mkdir -p ${FLATPAK_DEST}/etc/profile.d",
-                "echo 'export QT_PLUGIN_PATH=/usr/lib/qt5/plugins' > ${FLATPAK_DEST}/etc/profile.d/qt.sh",
-                "echo 'export QT_QPA_PLATFORMTHEME=gtk2' >> ${FLATPAK_DEST}/etc/profile.d/qt.sh"
+                "echo 'Checking Qt installation:'",
+                "find ${FLATPAK_DEST}/usr/lib -name 'libQt5*.so*' || true",
+                "ls -la ${FLATPAK_DEST}/usr/lib/qt5/plugins || true",
+                "ls -la ${FLATPAK_DEST}/usr/share/qt5/translations || true"
             ]
         }
     ],
