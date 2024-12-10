@@ -27,7 +27,7 @@ sudo apt-get install flatpak flatpak-builder
 
 2. Добавление репозитория:
 ```bash
-flatpak remote-add --if-not-exists astra-flatpak https://flatpak.devos.astralinux.ru/
+flatpak remote-add --if-not-exists astra-flatpak https://astraflathub.devos.astralinux.ru/
 ```
 
 3. Установка:
