@@ -1,47 +1,57 @@
 # Архитектура Astra Flatpak
 
 ```mermaid
-graph TD
-    subgraph bg5[Astra Flatpak architecture]
-        subgraph bg1[Main Runtime/Sdk]
-            B2[astra.mainPlatform]
-            C2[astra.mainSdk]
-        end
-
-        subgraph bg2[Addition Runtime/Sdk]
-            subgraph bg2a[Qt/KDE Environment]
-                F2[astra.Qt]
-                G2[astra.qtSdk]
-            end
-
-            subgraph bg2b[GTK/GNOME Environment]
-                J2[astra.Gtk]
-                K2[astra.gtkSdk]
-            end
-        end
-
-        subgraph bg3[Applications]
-            subgraph bg3a[Production]
-                D4[Qt/KDE приложения]
-                E4[GTK/GNOME приложения]
-            end
-
-            subgraph bg3b[Development]
-                D5[Qt/KDE разработка]
-                E5[GTK/GNOME разработка]
-            end
-        end
-    end
-
-    B2 --> F2
-    B2 --> J2
-    C2 --> G2
-    C2 --> K2
+---
+config:
+  look: classic
+---
+flowchart TD
+ subgraph bg4["Repositories"]
+        A1["Main Repo"]
+        A2["Extended Repo"]
+  end
+ subgraph bg1["Main Runtime/Sdk"]
+        B2["astra.mainPlatform"]
+        C2["astra.mainSdk"]
+  end
+ subgraph bg2a["Qt/KDE Environment"]
+        F2["astra.Qt"]
+        G2["astra.qtSdk"]
+  end
+ subgraph bg2b["GTK/GNOME Environment"]
+        J2["astra.Gtk"]
+        K2["astra.gtkSdk"]
+  end
+ subgraph bg2["Addition Runtime/Sdk"]
+        bg2a
+        bg2b
+  end
+ subgraph bg3a["Production"]
+        D4["Qt/KDE приложения"]
+        E4["GTK/GNOME приложения"]
+  end
+ subgraph bg3b["Development"]
+        D5["Qt/KDE разработка"]
+        E5["GTK/GNOME разработка"]
+  end
+ subgraph bg3["Applications"]
+        bg3a
+        bg3b
+  end
+ subgraph bg5["Astra Flatpak architecture"]
+        bg4
+        bg1
+        bg2
+        bg3
+  end
+    B2 --> F2 & J2
+    C2 --> G2 & K2
     F2 --> D4
     J2 --> E4
     G2 --> D5
     K2 --> E5
-
+    A1 --> B2 & J2 & F2
+    A2 --> C2 & G2 & K2
     style B2 fill:#dfd,stroke:#333,color:#333,fontcolor:#333
     style C2 fill:#dfd,stroke:#333,color:#333,fontcolor:#333
     style F2 fill:#f9e,stroke:#333,color:#333,fontcolor:#333
@@ -59,7 +69,9 @@ graph TD
     style bg3 fill:#ffffff,stroke:#333,color:#333,fontcolor:#333
     style bg3a fill:#ffffff,stroke:#333,color:#333,fontcolor:#333
     style bg3b fill:#ffffff,stroke:#333,color:#333,fontcolor:#333
+    style bg4 fill:#ffffff,stroke:#333,color:#333,fontcolor:#333
     style bg5 fill:#ffffff,stroke:#333,color:#333,fontcolor:#333
+
 ```
 
 ## Базовые компоненты
