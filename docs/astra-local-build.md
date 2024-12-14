@@ -2,6 +2,69 @@
 
 Инструкция описывает процесс локальной сборки всех компонентов Astra Flatpak инфраструктуры.
 
+Все сборочные процессы уже собраны в bash скрипты 
+
+Методология сборки описана схематично:
+```mermaid
+graph TD
+    %% Стили для блоков
+    classDef prepBlock fill:#d4edda,stroke:#333,stroke-width:2px,color:black
+    classDef runtimeBlock fill:#cce5ff,stroke:#333,stroke-width:2px,color:black
+    classDef sdkBlock fill:#fff3cd,stroke:#333,stroke-width:2px,color:black
+    classDef repoBlock fill:#e2e3e5,stroke:#333,stroke-width:2px,color:black
+
+    %% Подготовка
+    Init[Подготовка структуры каталогов]:::prepBlock
+    Init --> Runtime
+    Init --> SDK
+
+    %% Процесс сборки Runtime
+    subgraph Runtime[Сборка Runtime]
+        direction TB
+        R1[Создание базовой системы через debootstrap]:::runtimeBlock
+        R2[Установка компонентов]:::runtimeBlock
+        R3[Создание архива Runtime]:::runtimeBlock
+        R4[Формирование структуры Flatpak Runtime]:::runtimeBlock
+        
+        R1 --> R2
+        R2 --> R3
+        R3 --> R4
+    end
+
+    %% Процесс сборки SDK
+    subgraph SDK[Сборка SDK]
+        direction TB
+        S1[Создание базовой системы через debootstrap]:::sdkBlock
+        S2[Установка инструментов разработки]:::sdkBlock
+        S3[Создание архива SDK]:::sdkBlock
+        S4[Формирование структуры Flatpak SDK]:::sdkBlock
+        
+        S1 --> S2
+        S2 --> S3
+        S3 --> S4
+    end
+
+    %% Работа с репозиторием
+    R4 --> Repo[Работа с репозиторием]
+    S4 --> Repo
+    
+    subgraph Repo
+        direction TB
+        RI[Инициализация OSTree репозитория]:::repoBlock
+        RC[Коммит компонентов]:::repoBlock
+        RE[Экспорт в формат Flatpak]:::repoBlock
+        RU[Обновление метаданных репозитория]:::repoBlock
+        
+        RI --> RC
+        RC --> RE
+        RE --> RU
+    end
+
+    %% Завершение
+    RU --> Clean[Очистка временных файлов]:::prepBlock
+    Clean --> Final[Готовый репозиторий с компонентами]:::prepBlock
+```
+
 ## Предварительные требования
 
 ### Системные требования
@@ -25,22 +88,18 @@ sudo apt-get install -y \
 ## Получение исходного кода
 
 ```bash
-git clone https://git.devos.astralinux.ru/flatpak.git
+git clone https://git.devos.astralinux.ru/AstraOS/flatpak.git
 cd flatpak
 ```
 
 ## Структура проекта
 ```
 flatpak/
-├── build_all.sh          # Основной скрипт сборки
-├── manifests/            # Flatpak манифесты
+├── build_all.sh          # Основной скрипт сборки          
 └── scripts/              # Скрипты сборки компонентов
-    ├── build_mainPlatform.sh
-    ├── build_mainSdk.sh
+    ├── build_main.sh
     ├── build_qt.sh
-    ├── build_qtSdk.sh
     ├── build_gtk.sh
-    └── build_gtkSdk.sh
 ```
 
 ## Процесс сборки
@@ -61,18 +120,13 @@ sudo ./build_all.sh
 ### Ручная сборка отдельных компонентов
 ```bash
 # Сборка mainPlatform
-sudo ./scripts/build_mainPlatform.sh
-
-# Сборка mainSdk
-sudo ./scripts/build_mainSdk.sh
+sudo ./scripts/build_main.sh
 
 # Сборка Qt компонентов
 sudo ./scripts/build_qt.sh
-sudo ./scripts/build_qtSdk.sh
 
 # Сборка GTK компонентов
 sudo ./scripts/build_gtk.sh
-sudo ./scripts/build_gtkSdk.sh
 ```
 
 ## Проверка результатов сборки

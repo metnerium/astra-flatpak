@@ -6,6 +6,78 @@
 
 3. Среда [выполнения KDE](https://invent.kde.org/packaging/flatpak-kde-runtime) также основана на среде выполнения Freedesktop и включает в себя Qt и KDE Frameworks. Подходит для любого приложения, использующего KDE платформу и большинство приложений на базе Qt.
 
+## Архитектура
+```mermaid
+graph TD
+    classDef sourceBlock fill:#ff9999,stroke:#333,stroke-width:2px,color:black
+    classDef sdkBlock fill:#99ff99,stroke:#333,stroke-width:2px,color:black
+    classDef runtimeBlock fill:#9999ff,stroke:#333,stroke-width:2px,color:black
+    classDef libBlock fill:#ffff99,stroke:#333,stroke-width:2px,color:black
+    classDef flatpakBlock fill:#ff99ff,stroke:#333,stroke-width:2px,color:black
+
+    Flathub[Репозиторий Flathub]:::sourceBlock
+
+    subgraph FreedesktopLevel["Базовый уровень Freedesktop"]
+        direction TB
+        subgraph FreedesktopSDK["Freedesktop SDK"]
+            direction LR
+            FSDK[Базовый SDK]:::sdkBlock
+            FTools[Инструменты сборки]:::libBlock
+            FLib[Базовые библиотеки]:::libBlock
+        end
+        
+        subgraph FreedesktopRuntime["Freedesktop Runtime"]
+            direction LR
+            FRT[Базовый Runtime]:::runtimeBlock
+            CoreLibs[Основные библиотеки]:::libBlock
+            Graphics[Графический стек]:::libBlock
+        end
+    end
+
+    subgraph DesktopLevel["Окружения рабочего стола"]
+        direction LR
+        subgraph GNOME["GNOME Platform"]
+            direction TB
+            GSDK[GNOME SDK]:::sdkBlock
+            GRT[GNOME Runtime]:::runtimeBlock
+            GLibs[GNOME библиотеки]:::libBlock
+            GTK[GTK+ окружение]:::libBlock
+        end
+
+        subgraph KDE["KDE Platform"]
+            direction TB
+            KSDK[KDE SDK]:::sdkBlock
+            KRT[KDE Runtime]:::runtimeBlock
+            KLibs[KDE Frameworks]:::libBlock
+            QT[Qt окружение]:::libBlock
+        end
+    end
+
+    FlatpakApps[Flatpak приложения]:::flatpakBlock
+
+    Flathub --> FreedesktopSDK
+    Flathub --> FreedesktopRuntime
+    
+    FreedesktopSDK --> GSDK
+    FreedesktopSDK --> KSDK
+    
+    FreedesktopRuntime --> GRT
+    FreedesktopRuntime --> KRT
+    
+    GSDK --> GLibs
+    GSDK --> GTK
+    
+    KSDK --> KLibs
+    KSDK --> QT
+    
+    GRT --> FlatpakApps
+    KRT --> FlatpakApps
+    FRT --> FlatpakApps
+
+    linkStyle default stroke:#333,stroke-width:2px
+```
+
+
 ### Клонируйте репозиторий
 ```bash
 git clone https://git.devos.astralinux.ru/AstraOS/flatpak.git
