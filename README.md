@@ -1,8 +1,6 @@
 # Astra Linux Flatpak 
 
-![Astra Linux](https://img.shields.io/badge/Astra%20Linux-1.8-blue)
-![Astra Linux](https://img.shields.io/badge/Astra%20Linux-1.7-blue)
-![Flatpak](https://img.shields.io/badge/Flatpak-1.14.4-green)
+### Сборка осуществляется из пакетов ![Astra Linux](https://img.shields.io/badge/Astra%20Linux-1.8-blue)
 
 Инфраструктура Flatpak для Astra Linux предоставляет среду выполнения и разработки для создания изолированных приложений. Система включает в себя специализированные окружения для Qt/KDE и GTK/GNOME приложений.
 
