@@ -59,3 +59,44 @@
     ]
 }
 ```
+# Манифест для сборки Firefox 
+
+```yaml
+
+app-id: org.astra.Firefox
+runtime: org.astra.Gtk
+runtime-version: '1.8'
+sdk: org.astra.gtkSdk
+command: firefox
+separate-locales: false
+
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --share=network
+  - --device=dri
+  - --filesystem=home
+
+modules:
+  - name: firefox
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/lib
+      - cp -r ./usr/lib/firefox /app/lib/
+      - mkdir -p /app/share
+      - cp -r ./usr/share /app/
+      - mkdir -p /app/bin
+      - install -Dm755 ./usr/bin/firefox /app/bin/firefox
+      - mkdir -p /app/lib/firefox-addons
+      - rm -f /app/bin/firefox
+      - ln -s /app/lib/firefox/firefox /app/bin/firefox
+      - install -Dm644 ./usr/share/applications/firefox.desktop /app/share/applications/org.astra.firefox.desktop
+      - sed -i 's/firefox/org.astra.firefox/g' /app/share/applications/org.astra.firefox.desktop
+    sources:
+      - type: archive
+        path: firefox.tar.gz
+        strip-components: 0
+
+```
