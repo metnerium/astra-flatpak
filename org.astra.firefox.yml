@@ -1,0 +1,72 @@
+app-id: org.astra.Firefox
+runtime: org.astra.Gtk
+runtime-version: '1.8'
+sdk: org.astra.gtkSdk
+command: firefox
+separate-locales: false
+
+build-options:
+  env:
+    PATH: /usr/bin:/bin:/usr/sbin:/sbin
+
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --share=network
+  - --device=dri
+  - --filesystem=home
+
+modules:
+  - name: firefox
+    buildsystem: simple
+    build-commands:
+      # Основные файлы Firefox
+      - mkdir -p /app/lib
+      - cp -r ./usr/lib/firefox /app/lib/
+      - mkdir -p /app/bin
+      - ln -s /app/lib/firefox/firefox /app/bin/firefox
+      - mkdir -p /app/lib/firefox-addons
+      
+      # Создаем директории
+      - mkdir -p /app/share/applications
+      - mkdir -p /app/share/metainfo
+      - |
+        for size in 16 22 24 32 48 64 128 256; do
+          mkdir -p "/app/share/icons/hicolor/${size}x${size}/apps"
+        done
+      - mkdir -p /app/share/icons/hicolor/symbolic/apps
+      
+      # Desktop файл и метаданные
+      - install -Dm644 firefox.desktop /app/share/applications/org.astra.Firefox.desktop
+      - install -Dm644 org.astra.Firefox.metainfo.xml /app/share/metainfo/org.astra.Firefox.metainfo.xml
+      
+      # Копирование иконок
+      - |
+        for size in 16 22 24 32 48 64 128 256; do
+          if [ -f "./usr/share/icons/hicolor/${size}x${size}/apps/firefox.png" ]; then
+            install -Dm644 "./usr/share/icons/hicolor/${size}x${size}/apps/firefox.png" \
+              "/app/share/icons/hicolor/${size}x${size}/apps/org.astra.Firefox.png"
+          fi
+        done
+      
+      # Символическая иконка
+      - |
+        if [ -f "./usr/share/icons/hicolor/symbolic/apps/firefox-symbolic.svg" ]; then
+          install -Dm644 "./usr/share/icons/hicolor/symbolic/apps/firefox-symbolic.svg" \
+            "/app/share/icons/hicolor/symbolic/apps/org.astra.Firefox-symbolic.svg"
+        fi
+      
+      # Правка desktop файла
+      - sed -i 's/^Icon=.*$/Icon=org.astra.Firefox/' /app/share/applications/org.astra.Firefox.desktop
+      - sed -i 's/^Name=.*$/Name=Firefox Web Browser/' /app/share/applications/org.astra.Firefox.desktop
+    
+    sources:
+      - type: archive
+        path: firefox.tar.gz
+        strip-components: 0
+      - type: file
+        path: firefox.desktop
+      - type: file
+        path: org.astra.Firefox.metainfo.xml

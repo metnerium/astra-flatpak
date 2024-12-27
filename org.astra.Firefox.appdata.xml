@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.astra.Firefox.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MPL-2.0</project_license>
+  <name>Firefox Web Browser</name>
+  <name xml:lang="ru">Веб-браузер Firefox</name>
+  <summary>Browse the World Wide Web</summary>
+  <summary xml:lang="ru">Просмотр страниц Всемирной Сети</summary>
+  
+  <description>
+    <p>
+      Firefox is a powerful, extensible web browser with support for modern web applications.
+    </p>
+    <p xml:lang="ru">
+      Firefox - мощный расширяемый веб-браузер с поддержкой современных веб-приложений.
+    </p>
+    <ul>
+      <li>Enjoy safer, faster browsing</li>
+      <li>Search instantly</li>
+      <li>Latest web technologies support</li>
+    </ul>
+  </description>
+
+  <categories>
+    <category>Network</category>
+    <category>WebBrowser</category>
+  </categories>
+
+  <icon type="stock">org.astra.Firefox</icon>
+  
+  <content_rating type="oars-1.1" />
+  
+  <releases>
+    <release version="latest" date="2024-03-19"/>
+  </releases>
+
+  <url type="homepage">https://www.mozilla.org/firefox/</url>
+  
+  <provides>
+    <binary>firefox</binary>
+  </provides>
+
+  <launchable type="desktop-id">org.astra.Firefox.desktop</launchable>
+</component>

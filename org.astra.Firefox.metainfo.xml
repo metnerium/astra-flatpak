@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.astra.Firefox</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MPL-2.0</project_license>
+  <name>Firefox Web Browser</name>
+  <summary>Browse the World Wide Web</summary>
+  
+  <description>
+    <p>
+      Firefox delivers safe, easy web browsing. A familiar user interface,
+      enhanced security features, and customizable add-ons deliver an improved web
+      browsing experience.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">org.astra.Firefox.desktop</launchable>
+  <url type="homepage">https://www.mozilla.org/firefox/</url>
+  
+  <categories>
+    <category>Network</category>
+    <category>WebBrowser</category>
+  </categories>
+  
+  <provides>
+    <binary>firefox</binary>
+  </provides>
+</component>

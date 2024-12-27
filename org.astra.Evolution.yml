@@ -1,0 +1,219 @@
+# org.astra.Evolution.yml
+app-id: org.astra.Evolution
+runtime: org.astra.Gtk
+runtime-version: '1.8'
+sdk: org.astra.gtkSdk
+command: evolution
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --share=network
+  - --device=dri
+  - --filesystem=home
+  - --filesystem=xdg-download
+  - --talk-name=org.gnome.evolution.dataserver.Calendar8
+  - --talk-name=org.gnome.evolution.dataserver.AddressBook10
+  - --talk-name=org.gnome.evolution.dataserver.Sources5
+  - --talk-name=org.gnome.OnlineAccounts
+  - --own-name=org.astra.Evolution
+  - --filesystem=xdg-run/keyring
+  - --socket=session-bus
+
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/pkgconfig
+  - /share/aclocal
+  - /man
+  - /share/man
+  - /share/gtk-doc
+  - /share/vala
+  - /lib/cmake
+  - '*.la'
+  - '*.a'
+
+modules:
+  - name: evolution
+    buildsystem: simple
+    build-commands:
+      # Основные директории
+      - mkdir -p /app/bin /app/lib /app/libexec /app/share
+      
+      # Бинарные файлы
+      - cp -r ./usr/bin/evolution /app/bin/
+      
+      # Библиотеки
+      - cp -r ./usr/lib/evolution /app/lib/
+      - cp -r ./usr/lib/evolution-data-server /app/lib/
+      - cp -r ./usr/lib/gnome-settings-daemon-3.0 /app/lib/
+      - cp -r ./usr/lib/x86_64-linux-gnu /app/lib/
+      
+      # Libexec файлы
+      - cp -r ./usr/libexec/* /app/libexec/
+      
+      # PNG иконки
+      - |
+        for size in 16 22 24 32 48; do
+          mkdir -p /app/share/icons/hicolor/${size}x${size}/apps
+          if [ -f "./usr/share/icons/hicolor/${size}x${size}/apps/evolution.png" ]; then
+            install -Dm644 "./usr/share/icons/hicolor/${size}x${size}/apps/evolution.png" "/app/share/icons/hicolor/${size}x${size}/apps/org.astra.Evolution.png"
+          fi
+        done
+      
+      # SVG иконка
+      - |
+        mkdir -p /app/share/icons/hicolor/scalable/apps
+        if [ -f "./usr/share/icons/hicolor/scalable/apps/evolution.svg" ]; then
+          install -Dm644 "./usr/share/icons/hicolor/scalable/apps/evolution.svg" "/app/share/icons/hicolor/scalable/apps/org.astra.Evolution.svg"
+        fi
+      
+      # Ресурсы
+      - mkdir -p /app/share/applications
+      - cp -r ./usr/share/evolution /app/share/
+      - cp -r ./usr/share/evolution-data-server /app/share/
+      - cp -r ./usr/share/glib-2.0 /app/share/
+      - cp -r ./usr/share/libgweather-4 /app/share/
+      - cp -r ./usr/share/GConf /app/share/
+      - cp -r ./usr/share/metainfo /app/share/
+      
+      # Desktop файл
+      - |
+        cat > /app/share/applications/org.astra.Evolution.desktop << EOF
+        [Desktop Entry]
+        Name=Evolution
+        Name[ru]=Evolution
+        GenericName=Groupware Suite
+        GenericName[ru]=Офисный пакет для групповой работы
+        Comment=Manage your email, contacts and schedule
+        Comment[ru]=Управление электронной почтой, контактами и календарём
+        Keywords=email;calendar;contact;mail;news;
+        Keywords[ru]=почта;календарь;контакты;новости;
+        Exec=evolution %U
+        Icon=org.astra.Evolution
+        Terminal=false
+        Type=Application
+        Categories=GNOME;GTK;Office;Email;Calendar;ContactManagement;
+        StartupNotify=true
+        MimeType=text/calendar;text/x-vcard;text/directory;application/mbox;message/rfc822;x-scheme-handler/mailto;x-scheme-handler/webcal;x-scheme-handler/calendar;x-scheme-handler/news;x-scheme-handler/snews;x-scheme-handler/nntp;x-scheme-handler/feed;x-scheme-handler/vcard;
+        DBusActivatable=true
+        Actions=new-window;new-mail;
+        X-Flatpak=org.astra.Evolution
+        X-Desktop-File-Install-Version=0.26
+
+        [Desktop Action new-window]
+        Name=New Window
+        Name[ru]=Новое окно
+        Exec=evolution -c current
+
+        [Desktop Action new-mail]
+        Name=New Mail
+        Name[ru]=Новое письмо
+        Exec=evolution mailto:
+        EOF
+      
+      # DBus сервисы
+      - mkdir -p /app/share/dbus-1/services
+      - |
+        if [ -f "./usr/share/dbus-1/services/org.gnome.evolution.dataserver.Calendar8.service" ]; then
+          install -Dm644 "./usr/share/dbus-1/services/org.gnome.evolution.dataserver.Calendar8.service" \
+            "/app/share/dbus-1/services/org.gnome.evolution.dataserver.Calendar8.service"
+          sed -i "s#Exec=.*#Exec=/app/libexec/evolution-source-registry#" \
+            "/app/share/dbus-1/services/org.gnome.evolution.dataserver.Calendar8.service"
+        fi
+      - |
+        if [ -f "./usr/share/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service" ]; then
+          install -Dm644 "./usr/share/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service" \
+            "/app/share/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service"
+          sed -i "s#Exec=.*#Exec=/app/libexec/evolution-source-registry#" \
+            "/app/share/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service"
+        fi
+      - |
+        if [ -f "./usr/share/dbus-1/services/org.gnome.evolution.dataserver.Sources5.service" ]; then
+          install -Dm644 "./usr/share/dbus-1/services/org.gnome.evolution.dataserver.Sources5.service" \
+            "/app/share/dbus-1/services/org.gnome.evolution.dataserver.Sources5.service"
+          sed -i "s#Exec=.*#Exec=/app/libexec/evolution-source-registry#" \
+            "/app/share/dbus-1/services/org.gnome.evolution.dataserver.Sources5.service"
+        fi
+      - |
+        if [ -f "./usr/share/dbus-1/services/org.gnome.evolution.dataserver.UserPrompter0.service" ]; then
+          install -Dm644 "./usr/share/dbus-1/services/org.gnome.evolution.dataserver.UserPrompter0.service" \
+            "/app/share/dbus-1/services/org.gnome.evolution.dataserver.UserPrompter0.service"
+          sed -i "s#Exec=.*#Exec=/app/libexec/evolution-source-registry#" \
+            "/app/share/dbus-1/services/org.gnome.evolution.dataserver.UserPrompter0.service"
+        fi
+
+      - |
+        cat > /app/share/dbus-1/services/org.astra.Evolution.service << EOF
+        [D-BUS Service]
+        Name=org.astra.Evolution
+        Exec=/app/bin/evolution --force-online
+        SystemdService=org.astra.Evolution.service
+        EOF
+      
+      # Разрешения
+      - chmod +x /app/bin/evolution
+      - chmod +x /app/libexec/*
+
+    sources:
+      - type: archive
+        path: evolution.tar.gz
+        strip-components: 0
+
+  - name: appdata
+    buildsystem: simple
+    build-commands:
+      - |
+        mkdir -p /app/share/metainfo
+        cat > /app/share/metainfo/org.astra.Evolution.appdata.xml << EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <component type="desktop-application">
+          <id>org.astra.Evolution</id>
+          <metadata_license>CC0-1.0</metadata_license>
+          <project_license>GPL-2.0+</project_license>
+          <name>Evolution</name>
+          <name xml:lang="ru">Evolution</name>
+          <summary>Manage your email, contacts and schedule</summary>
+          <summary xml:lang="ru">Управление электронной почтой, контактами и календарём</summary>
+          
+          <description>
+            <p>Evolution is a personal information management application that provides integrated mail, calendaring and address book functionality.</p>
+            <p xml:lang="ru">Evolution - это приложение для управления личной информацией, которое обеспечивает интегрированную работу с почтой, календарём и адресной книгой.</p>
+          </description>
+          
+          <launchable type="desktop-id">org.astra.Evolution.desktop</launchable>
+          <url type="homepage">https://wiki.gnome.org/Apps/Evolution</url>
+          
+          <provides>
+            <binary>evolution</binary>
+          </provides>
+          
+          <categories>
+            <category>Office</category>
+            <category>Email</category>
+            <category>Calendar</category>
+            <category>ContactManagement</category>
+          </categories>
+          
+          <releases>
+            <release version="3.46.0" date="2023-09-16"/>
+          </releases>
+          
+          <content_rating type="oars-1.1"/>
+
+          <kudos>
+            <kudo>HiDpiIcon</kudo>
+            <kudo>ModernToolkit</kudo>
+            <kudo>Notifications</kudo>
+          </kudos>
+
+          <screenshots>
+            <screenshot type="default">
+              <caption>Main window showing email</caption>
+              <caption xml:lang="ru">Главное окно с электронной почтой</caption>
+              <image>https://wiki.gnome.org/Apps/Evolution?action=AttachFile&amp;do=get&amp;target=evolution-main.png</image>
+            </screenshot>
+          </screenshots>
+        </component>
+        EOF

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.kde.kcalc</id>
+  <name>KCalc</name>
+  <summary>Scientific Calculator</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <description>
+    <p>KCalc is a calculator which offers many mathematical functions.</p>
+    <p>Features:</p>
+    <ul>
+      <li>Scientific calculator</li>
+      <li>Statistical functions</li>
+      <li>Trigonometric functions</li>
+      <li>Memory functions</li>
+    </ul>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://cdn.kde.org/screenshots/kcalc/kcalc.png</image>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">https://kde.org/applications/utilities/kcalc/</url>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?product=kcalc</url>
+  <url type="help">https://docs.kde.org/stable5/en/kcalc/kcalc/</url>
+  <developer_name>KDE Community</developer_name>
+  <releases>
+    <release version="22.12" date="2022-12-08"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>
